@@ -1,0 +1,9 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+
+.review-form-control{
+    width: 800px;
+    height:100px;
+}

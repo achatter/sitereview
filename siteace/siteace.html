@@ -1,0 +1,143 @@
+<head>
+  <title>siteace</title>
+</head>
+
+<body>
+
+</body>
+
+<template name="ApplicationLayout">
+    {{> yield "navbar"}}
+    {{> yield "addform"}}
+    {{> yield "main"}}
+</template>
+
+<template name="navbar">
+    <!-- navbar  - you will be putting the login functions here -->
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+          <div>
+             {{> loginButtons}}  
+          </div>    
+	      <a class="navbar-brand" href="#">
+	        Welcome to Site Ace!
+	      </a>
+	    </div>
+	  </div>
+	</nav>
+</template>
+
+<template name="website_form">
+    {{#if currentUser}}
+    <div class="container">
+        <a class="btn btn-default js-toggle-website-form" href="#">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+        <div id="website_form" class="hidden_div">
+            <form class="js-save-website-form">
+              <div class="form-group">
+                <label for="url">Site address</label>
+                <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+              </div>
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Mysite">
+              </div>
+                <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+              </div>
+
+              <button type="submit" class="btn btn-default">Submit</button>
+
+            </form>
+        </div>
+        </div>
+    {{/if}}
+</template>
+<!-- template that displays several website items -->
+<template name="website_list">
+	<ol>
+	{{#each websites}}
+        <div class="container">
+	           {{>website_item}}
+       </div>
+	{{/each}}
+	</ol>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+<div class="container">
+    <li>
+        <h3><a href="{{url}}">{{title}}</a></h3>
+    
+        <p>
+            {{description}}
+        </p>
+        <p>
+            Website added on: {{createdOn}}
+        </p>
+        <p>
+            Website has {{upvoteCount}} Upvotes and {{downvoteCount}} Downvotes
+        </p>
+
+        <!-- up and down vote buttons! -->
+        <button class="js-upvote btn btn-success">+</button>
+        <button class="js-downvote btn btn-warning">-</button>
+        <a href="/review/{{_id}}"><button class="js-website-review btn btn-info">Review</button></a>
+    </li>
+    <br>
+      <div class = "panel panel-default">
+            <div class = "panel-heading">
+                <h3 class = "panel-title"> 
+                    Website Review: 
+                </h3>
+            </div>
+            {{#each review}}
+            <ul class = "list-group">
+                <li class = "list-group-item">{{.}}</li>
+            </ul>
+            {{ /each }}
+        </div>
+ </div> 
+
+</template>
+<template name="website">
+    <div class="container">
+        <a href="{{url}}">{{title}}</a>
+        <p>
+            {{description}}
+        </p>
+        <p>
+            Website added on: {{createdOn}}
+        </p>
+        <p>
+            Website has {{upvoteCount}} Upvotes and {{downvoteCount}} Downvotes
+        </p>
+        <div class = "panel panel-default">
+            <div class = "panel-heading">
+                <h3 class = "panel-title">
+                    Website Review: 
+                </h3>
+            </div>
+            {{#each review}}
+            <ul class = "list-group">
+                <li class = "list-group-item">{{.}}</li>
+            </ul>
+            {{ /each }}
+        </div>
+        <div id="website_review_form">
+            <form class="js-save-website-review-form">
+              <div class="form-group">
+                <label for="review">Your Review</label>
+                  <br>
+                <input type="text" class="review-form-control" id="review" placeholder="I found this site really useful for ...">
+              </div>
+                <button type="submit" class="btn btn-succes">Submit</button><a href="/"><button type="button" class="btn btn-primary pull-right">Back</button></a>
+            </form>
+            
+        </div>
+    </div>
+</template>
